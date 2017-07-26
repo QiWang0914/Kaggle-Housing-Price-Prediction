@@ -14,7 +14,7 @@ ABS_trainCont_correlations_onPrice <- ABS_trainCont_correlations[,"SalePrice"]
 
 sort(rank(ABS_trainCont_correlations_onPrice))[1:5]
 
-#Linear Regression
+##Linear Regression
 
 setwd("C:/Users/Mr.Q/Documents")
 train <- read.csv("train.csv", stringsAsFactors = FALSE)
@@ -145,8 +145,8 @@ coef(fit0, s = "lambda.1se")
 
 mod0 <- lm(LogPrice ~., data = train)
 mod0
-#--------------------------------------------------------------------------------------------------------------------------------
-## tree based model
+--------------------------------------------------------------------------------------------------------------------------------
+#tree based model:
 train <- read.csv("train.csv", stringsAsFactors = FALSE)
 train <- subset(train, select = -c(Id))#delete id
 test <-  read.csv("test.csv", stringsAsFactors = FALSE)
@@ -223,7 +223,7 @@ Totset$TotalBath <- Totset$BsmtFullBath + 0.5*Totset$BsmtHalfBath +
   Totset$FullBath + 0.5*Totset$HalfBath
 dim(Totset)
 
-#Set factor for all characters
+##Set factor for all characters
 catg_feature <- c("MSSubClass", "MSZoning", "Street", "Alley", "LotShape", "LandContour",
                   "LotConfig", "LandSlope", "Neighborhood", "Condition1", "Condition2",
                   "BldgType", "HouseStyle", "OverallQual", "OverallCond", "RoofStyle", "RoofMatl",
@@ -271,15 +271,10 @@ test.pred <- predict(rf, test.data)
 test.pred
 sum((test.pred - log(test.data$SalePrice)) ^ 2)
 #--------------------------------------------------------------------------------------------------------------------------------
-#Fitting with xgboosting
+##Fitting with xgboosting
 library(xgboost)
 train.label = log(train.data$SalePrice)
 test.label = log(test.data$SalePrice)
-
-##gbt <- xgboost(data = train.data[, -dim(train.data)[2]],
-##               label = train.label, max_depth = 8,
-##               nrounds = 20, objective = 'reg:linear',
-##               verbose = 1)
 
 feature.matrix <- model.matrix(~., data = train.data[, - dim(train.data)[2]])
 dim(feature.matrix)
