@@ -53,7 +53,7 @@ train$MasVnrArea[which(is.na(train$MasVnrArea))] <- mean(train$MasVnrArea, na.rm
 
 library(mice)
 impute.train <- mice(train, m = 5, printFlag = FALSE)
-## note the categorical (character) variable needs to be factor.
+
 train$MasVnrType <- as.factor(train$MasVnrType)
 train$Electrical <- as.factor(train$Electrical)
 impute.train <- mice(train, m = 5, method='pmm', printFlag = FALSE)
